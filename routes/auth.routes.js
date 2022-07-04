@@ -2,7 +2,8 @@ const router = require("express").Router();
 
 
 router.get("/login", (req, res, next) => {
-    res.send("login");
+    res.render("auth/login");
+
 });
 
 router.post("/login", (req, res, next) => {
@@ -10,7 +11,8 @@ router.post("/login", (req, res, next) => {
 });
 
 router.get("/signup", (req, res, next) => {
-    res.send("signup");
+    res.render("auth/signup");
+
 });
 
 router.post("/signup", (req, res, next) => {
@@ -20,4 +22,5 @@ router.post("/signup", (req, res, next) => {
 router.post("/logout", (req, res, next) => {
     res.send("logut");
 });
+
 module.exports = router;
