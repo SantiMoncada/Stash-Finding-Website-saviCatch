@@ -1,0 +1,26 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00b7ff;
+}
+
+h1 {
+  color: 15px;
+}
+
+.bcVid {
+  background-image: url(./../images/city.jpg);
+  background-size: contain;
+  height: 40vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: black;
+}
+
+.center {
+  justify-content: center;
+  text-align: center;
+  padding-top: 100px;
+}
