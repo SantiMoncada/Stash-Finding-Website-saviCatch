@@ -1,0 +1,12 @@
+<h1>Details</h1>
+
+{{user.username}}
+<img style="width:50px; heigth:50px" src="{{user.avatar}}" alt="avatar">
+{{user.email}}
+{{user.description}}
+{{user.points}}
+<br>
+<a href="/users/{{user.id}}/update">EDIT</a>
+<form action=" /users/{{user.id}}/delete" method="POST" style="display: inline-block">
+    <input type="submit" value="DELETE">
+</form>

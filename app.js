@@ -24,6 +24,8 @@ app.use("/", auth);
 const maps = require("./routes/maps.routes");
 app.use("/maps", maps);
 
+const users = require("./routes/users.routes");
+app.use("/users", users);
 
 require("./error-handling")(app);
 
