@@ -1,26 +1,27 @@
-body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
-a {
-  color: #00b7ff;
-}
-
-h1 {
-  color: 15px;
-}
-
-.bcVid {
+.hero {
   background-image: url(./../images/city.jpg);
   background-size: contain;
-  height: 40vh;
+  height: 400px;
   background-size: cover;
   background-repeat: no-repeat;
   color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 100px;
 }
 
-.center {
-  justify-content: center;
+.center>h1 {
+  font-size: 70px;
+  color: white;
+  white-space: nowrap;
+}
+
+#indexArticle {
+
   text-align: center;
-  padding-top: 100px;
+}
+
+#indexInfoImg {
+  height: 160px;
 }
