@@ -15,7 +15,7 @@ Website where persons can create puzzles and codes for others to find
 | `/signup`           | POST      | Sign up form                   |
 | `/logout`           | GET       | log out                        |
 | `/maps`             | GET       | List of all maps               |
-| `/maps/:id`         | GET       | Details of a specific map      |
+| `/maps/:id/details` | GET       | Details of a specific map      |
 | `/maps/create`      | GET       | Create a new map               |
 | `/maps/create`      | POST      | Create a new map               |
 | `/maps/:id/update`  | GET       | Update a specific map          |

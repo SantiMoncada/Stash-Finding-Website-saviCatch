@@ -6,7 +6,9 @@ const { isLoggedIn } = require("../middleware/session-guard");
 const { checkRole } = require("../middleware/check-role");
 
 router.get("/", (req, res, next) => {
-    res.send("map");
+    Map.find()
+        .then(data => res.render("maps/list-maps", { data }))
+        .catch(err => next(err));
 });
 
 router.get("/create", isLoggedIn, checkRole("ADMIN", "CREATOR"), (req, res, next) => {
@@ -14,10 +16,10 @@ router.get("/create", isLoggedIn, checkRole("ADMIN", "CREATOR"), (req, res, next
 });
 
 router.post("/create", isLoggedIn, checkRole("ADMIN", "CREATOR"), (req, res, next) => {
-    const { name, desctiption, address, type } = req.body;
+    const { name, description, address, type } = req.body;
     const newMap = {
         name,
-        desctiption,
+        description,
         type,
         owner: req.session.currentUser._id,
         location: {
@@ -30,5 +32,43 @@ router.post("/create", isLoggedIn, checkRole("ADMIN", "CREATOR"), (req, res, nex
         .catch(err => next(err));
 });
 
+router.get("/:id/details", (req, res, next) => {
+
+    Map.findById(req.params.id)
+        .populate("owner")
+        .then(data => res.render("maps/details-map", data))
+        .catch(err => next(err));
+});
+
+
+router.get("/:id/edit", (req, res, next) => {
+
+    Map.findById(req.params.id)
+        .then(data => res.render("maps/edit-map", data))
+        .catch(err => next(err));
+});
+
+router.post("/:id/edit", (req, res, next) => {
+    const { name, description, address, type } = req.body;
+    const newMap = {
+        name,
+        description,
+        type,
+        owner: req.session.currentUser._id,
+        location: {
+            type: "Point",
+            coordinates: [0, 0] // TODO add geocoding
+        }
+    }
+    Map.findByIdAndUpdate(req.params.id, newMap)
+        .then(res.redirect("/maps"))
+        .catch(err => next(err));
+});
+
+router.post("/:id/delete", (req, res, next) => {
+    Map.findByIdAndDelete(req.params.id)
+        .then(res.redirect("/maps"))
+        .catch(err => next(err));
+});
 
 module.exports = router;
