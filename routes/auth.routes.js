@@ -2,7 +2,7 @@ const router = require("express").Router();
 
 
 router.get("/login", (req, res, next) => {
-    res.send("login");
+    res.render("auth/create");
 });
 
 router.post("/login", (req, res, next) => {

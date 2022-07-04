@@ -9,7 +9,7 @@ Website where persons can create puzzles and codes for others to find
 | `/`                 | GET       | Home                           |
 | `/about`            | GET       | Information about the web      |
 | `/help`             | GET       | Solution to issues             |
-| `/login`            | GET       | Log in form                    | [comment]: <> (If the auths endpoints need to be in a /auth path)
+| `/login`            | GET       | Log in form                    |
 | `/login`            | POST      | Log in form                    |
 | `/signup`           | GET       | Sign up form                   |
 | `/signup`           | POST      | Sign up form                   |
