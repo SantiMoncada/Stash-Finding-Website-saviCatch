@@ -1,12 +1,80 @@
-<h1>Details</h1>
+<div class="mt-5 container">
+    <div class="row">
+        <div class="col-4">
+            <img src="{{avatar}}" alt="piture of {{username}}">
+            <h2>{{username}}</h2>
+            <h3>{{email}}</h3>
+            <p>{{description}}</p>
+        </div>
+        <div class="col-4">
+            <h2>Activity</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First</th>
+                        <th scope="col">Last</th>
+                        <th scope="col">Handle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>@fat</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td colspan="2">Larry the Bird</td>
+                        <td>@twitter</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-{{user.username}}
-<img style="width:50px; heigth:50px" src="{{user.avatar}}" alt="avatar">
-{{user.email}}
-{{user.description}}
-{{user.points}}
-<br>
-<a href="/users/{{user.id}}/update">EDIT</a>
-<form action=" /users/{{user.id}}/delete" method="POST" style="display: inline-block">
-    <input type="submit" value="DELETE">
-</form>
+        <div class="col-4">
+            <h2>Points:{{points}}</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First</th>
+                        <th scope="col">Last</th>
+                        <th scope="col">Handle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>@fat</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td colspan="2">Larry the Bird</td>
+                        <td>@twitter</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <form action="/users/{{id}}/delete" method="POST">
+        <a href="/users/{{id}}/update" class="btn btn-info">Edit</a>
+        <input type="submit" value="Delete" class="btn btn-danger">
+    </form>
+
+</div>

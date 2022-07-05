@@ -1,3 +1,7 @@
+img {
+  width: 100%;
+}
+
 .hero {
   background-image: url(./../images/city.jpg);
   background-size: contain;
@@ -24,6 +28,7 @@
 
 #indexInfoImg {
   height: 160px;
+  width: 150px;
 }
 
 #thumbnailMap {

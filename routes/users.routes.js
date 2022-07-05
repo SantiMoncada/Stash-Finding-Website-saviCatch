@@ -14,7 +14,7 @@ router.get('/:id', (req, res, next) => {
     User
         .findById(id)
         .then(user => {
-            res.render('user/details', { user })
+            res.render('user/details', user)
         })
         .catch(err => console.log(err))
 })

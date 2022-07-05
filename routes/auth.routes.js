@@ -1,20 +1,29 @@
 const router = require("express").Router();
-const bcrypt = require('bcryptjs')
-const User = require("../models/User.model")
-const saltRounds = 10
+const bcrypt = require('bcryptjs');
+const User = require("../models/User.model");
+const uploader = require("../config/uploader.config");
+const saltRounds = 10;
+
 
 
 router.get("/signup", (req, res, next) => {
     res.render("auth/signup");
 });
 
-router.post("/signup", (req, res, next) => {
-    const { password } = req.body
-    console.log(req.body)
+router.post("/signup", uploader.single('avatar'), (req, res, next) => {
+    const { password, username, email } = req.body;
+
+    const avatar = req.file ? req.file.path : undefined;
+
     bcrypt
         .genSalt(saltRounds)
         .then(salt => bcrypt.hash(password, salt))
-        .then(hashedPassword => User.create({ ...req.body, password: hashedPassword }))
+        .then(hashedPassword => User.create({
+            username,
+            email,
+            password: hashedPassword,
+            avatar
+        }))
         .then(createdUser => res.redirect('/'))
         .catch(error => next(error))
 });

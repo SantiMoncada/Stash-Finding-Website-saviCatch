@@ -1,7 +1,7 @@
 <div class="container mt-5">
     <div class="row" style="justify-content:center">
         <div class="col-md-4">
-            <form action="/signup" method="POST">
+            <form action="/signup" method="POST" enctype="multipart/form-data">
                 <div class="form-row">
                     <div class="form-group mb-3">
                         <label for="name">User name</label>
@@ -13,10 +13,15 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" placeholder="password" name="password">
+                        <input type="password" class="form-control" id="password" placeholder="password"
+                            name="password">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="avatar">Avatar</label>
+                        <input type="file" class="form-control" id="avatar" placeholder="avatar" name="avatar">
                     </div>
                 </div>
-                <button type="submit" class="btn btn-secondary">Sign in</button>
+                <button type="submit" class="btn btn-secondary">Register</button>
             </form>
         </div>
     </div>
