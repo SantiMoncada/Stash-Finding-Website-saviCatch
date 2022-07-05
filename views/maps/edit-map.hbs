@@ -8,7 +8,7 @@
                         value="{{name}}">
                 </div>
 
-                <div class=" form-group mb-3">
+                <div class="form-group mb-3">
                     <label for="description">Description</label>
                     <textarea type="text" class="form-control" id="description" name="description"
                         placeholder="description of the map">{{description}}</textarea>
@@ -17,6 +17,20 @@
                 <div class="form-group mb-3">
                     <label for="address">Address</label>
                     <input type="text" class="form-control" id="address" name="address" placeholder="Madrid, street Nº">
+                </div>
+                <div class="form-group mb-3">
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="lat">Latitude</label>
+                            <input type="text" class="form-control" id="lat" name="lat" placeholder="0.0"
+                                value="{{location.coordinates.[0]}}">
+                        </div>
+                        <div class="col-6">
+                            <label for="lon">longitude</label>
+                            <input type="text" class="form-control" id="lon" name="lon" placeholder="0.0"
+                                value="{{location.coordinates.[1]}}">
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-group mb-3">
@@ -32,3 +46,4 @@
         </div>
     </div>
 </div>
+<script src="/js/geocode.js"></script>

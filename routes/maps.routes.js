@@ -17,7 +17,7 @@ router.get("/create", isLoggedIn, checkRole("ADMIN", "CREATOR"), (req, res, next
 });
 
 router.post("/create", isLoggedIn, checkRole("ADMIN", "CREATOR"), (req, res, next) => {
-    const { name, description, address, type } = req.body;
+    const { name, description, address, type, lat, lon } = req.body;
     const newMap = {
         name,
         description,
@@ -25,7 +25,7 @@ router.post("/create", isLoggedIn, checkRole("ADMIN", "CREATOR"), (req, res, nex
         owner: req.session.currentUser._id,
         location: {
             type: "Point",
-            coordinates: [0, 0] // TODO add geocoding
+            coordinates: [lat, lon] // TODO add geocoding
         }
     }
     Map.create(newMap)
@@ -45,15 +45,15 @@ router.get("/:id/details", (req, res, next) => {
 });
 
 
-router.get("/:id/edit", (req, res, next) => {
+router.get("/:id/edit", isLoggedIn, (req, res, next) => {
 
     Map.findById(req.params.id)
         .then(data => res.render("maps/edit-map", data))
         .catch(err => next(err));
 });
 
-router.post("/:id/edit", (req, res, next) => {
-    const { name, description, address, type } = req.body;
+router.post("/:id/edit", isLoggedIn, (req, res, next) => {
+    const { name, description, type, lat, lon } = req.body;
     const newMap = {
         name,
         description,
@@ -61,7 +61,7 @@ router.post("/:id/edit", (req, res, next) => {
         owner: req.session.currentUser._id,
         location: {
             type: "Point",
-            coordinates: [0, 0] // TODO add geocoding
+            coordinates: [lat, lon] // TODO add geocoding
         }
     }
     Map.findByIdAndUpdate(req.params.id, newMap)
@@ -69,7 +69,7 @@ router.post("/:id/edit", (req, res, next) => {
         .catch(err => next(err));
 });
 //TODO delete reviews when they get added 
-router.post("/:id/delete", (req, res, next) => {
+router.post("/:id/delete", isLoggedIn, (req, res, next) => {
     Map.findById(req.params.id)
         .select("stashes")
         .then(map => {
