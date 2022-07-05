@@ -1,6 +1,7 @@
 const router = require("express").Router();
 
 const Map = require("../models/Map.model");
+const Stash = require("../models/Stash.model");
 
 const { isLoggedIn } = require("../middleware/session-guard");
 const { checkRole } = require("../middleware/check-role");
@@ -37,7 +38,9 @@ router.get("/:id/details", (req, res, next) => {
     Map.findById(req.params.id)
         .populate("owner")
         .populate("stashes")
-        .then(data => res.render("maps/details-map", data))
+        .then(data => {
+            res.render("maps/details-map", data)
+        })
         .catch(err => next(err));
 });
 
@@ -65,10 +68,23 @@ router.post("/:id/edit", (req, res, next) => {
         .then(res.redirect("/maps"))
         .catch(err => next(err));
 });
-
+//TODO delete reviews when they get added 
 router.post("/:id/delete", (req, res, next) => {
-    Map.findByIdAndDelete(req.params.id)
-        .then(res.redirect("/maps"))
+    Map.findById(req.params.id)
+        .select("stashes")
+        .then(map => {
+            console.log(map.stashes)
+            const filterParam = {
+                $or: []
+            }
+            map.stashes.forEach(stashID => {
+                filterParam.$or.push({ _id: stashID });
+            });
+
+            return Stash.deleteMany(filterParam);
+        })
+        .then(() => Map.findByIdAndDelete(req.params.id))
+        .then(() => res.redirect("/maps"))
         .catch(err => next(err));
 });
 

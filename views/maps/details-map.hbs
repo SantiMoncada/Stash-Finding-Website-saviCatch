@@ -1,16 +1,56 @@
-<p>{{name}}
-</p>
-<p>{{description}}
-</p>
-<p>{{owner.username}}
-</p>
-<p>{{type}}
-</p>
-<p>
-    {{#each stashes}}
-    {{name}}
-    {{/each}}
-</p>
+<div class="mt-5 container">
+    <h1>{{name}}</h1>
+    <p>{{description}}</p>
 
-<a href="/maps/{{id}}/edit">Edit</a>
-<a href="/stashes/{{id}}/create">Add stash</a>
+
+    <div class="row justify-content-between">
+        <div class="col-6">
+            <h2>Activity</h2>
+            <table class="table  table-success table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First</th>
+                        <th scope="col">Last</th>
+                        <th scope="col">Handle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>@fat</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td colspan="2">Larry the Bird</td>
+                        <td>@twitter</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+        <div class="col-4">
+            <h2>Stashes</h2>
+            <div class="list-group">
+                {{#each stashes}}
+                <a href="#" class="list-group-item list-group-item-action">{{name}}</a>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+
+    <form action="/maps/{{id}}/delete" method="post">
+        <a href="/stashes/{{id}}/create" class="btn btn-success">Add stash</a>
+        <a href="/maps/{{id}}/edit" class="btn btn-info">Edit</a>
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+</div>

@@ -28,5 +28,14 @@ router.post("/:mapId/create", isLoggedIn, checkRole("ADMIN", "CREATOR"), (req, r
 
 //List of stashes
 
+//deleting stash
+router.post("/:mapID/delete/:stashID", (req, res, next) => {
+    const { mapID, stashID } = req.params;
+
+    Map.findByIdAndUpdate(mapID, { $pull: { stashes: stashID } })
+        .then(() => Stash.findByIdAndDelete(stashID))
+        .then(() => res.redirect("/maps"))
+        .catcht(err => next(err));
+});
 
 module.exports = router;

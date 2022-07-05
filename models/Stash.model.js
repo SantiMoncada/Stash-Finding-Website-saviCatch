@@ -23,11 +23,7 @@ const stashSchema = new Schema(
         password: {
             type: String,
             required: [true, "Password for stash is required"]
-        },
-        reviews: [{
-            type: Schema.Types.ObjectId,
-            ref: 'Review',
-        }]
+        }
     },
     {
         timestamps: true,
