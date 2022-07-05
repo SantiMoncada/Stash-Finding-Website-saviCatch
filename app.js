@@ -27,6 +27,9 @@ app.use("/maps", maps);
 const users = require("./routes/users.routes");
 app.use("/users", users);
 
+const stashes = require("./routes/stashes.routes");
+app.use("/stashes", stashes);
+
 require("./error-handling")(app);
 
 module.exports = app;
