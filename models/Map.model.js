@@ -32,7 +32,7 @@ const mapSchema = new Schema(
         stashes: [{
             type: Schema.Types.ObjectId,
             ref: 'Stash',
-            required: true
+            timestamp: Date.now()
         }],
     },
     {

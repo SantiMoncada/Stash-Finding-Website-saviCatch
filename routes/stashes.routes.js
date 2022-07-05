@@ -5,29 +5,28 @@ const Map = require("../models/Map.model");
 
 const { Schema, model } = require("mongoose");
 const { isLoggedIn } = require('../middleware/session-guard');
-
+const { checkRole } = require("../middleware/check-role");
 
 //Create stash
-router.get("/:mapId/create", isLoggedIn, (req, res, next) => {
+router.get("/:mapId/create", isLoggedIn, checkRole("ADMIN", "CREATOR"), (req, res, next) => {
     const { mapId } = req.params;
     res.render("stashes/create-stash", { mapId });
 });
 
-router.post("/:mapId/create", isLoggedIn, (req, res, next) => {
-    const { name, description, hints, password, type } = req.body;
+router.post("/:mapId/create", isLoggedIn, checkRole("ADMIN", "CREATOR"), (req, res, next) => {
+    const { mapId } = req.params
+
     const newStash = {
-        name,
-        description,
-        hints,
-        password,
-        type,
+        ...req.body,
         owner: req.session.currentUser._id
     }
     Stash.create(newStash)
+        .then(stash => Map.findByIdAndUpdate(mapId, { $push: { stashes: stash._id } }))
         .then(res.redirect("/maps"))
-        .catch(err => next(err));
+        .catch(err => console.log(err));
 });
 
 //List of stashes
+
 
 module.exports = router;
