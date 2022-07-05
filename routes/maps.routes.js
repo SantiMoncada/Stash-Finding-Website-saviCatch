@@ -6,12 +6,17 @@ const Stash = require("../models/Stash.model");
 const { isLoggedIn } = require("../middleware/session-guard");
 const { checkRole } = require("../middleware/check-role");
 
+//List all maps
 router.get("/", (req, res, next) => {
     Map.find()
-        .then(data => res.render("maps/list-maps", { data }))
+        .then(data => {
+            res.render("maps/list-maps", { data })
+        })
         .catch(err => next(err));
 });
 
+
+//Create maps
 router.get("/create", isLoggedIn, checkRole("ADMIN", "CREATOR"), (req, res, next) => {
     res.render("maps/create-map");
 });
@@ -33,8 +38,8 @@ router.post("/create", isLoggedIn, checkRole("ADMIN", "CREATOR"), (req, res, nex
         .catch(err => next(err));
 });
 
+//Show maps details
 router.get("/:id/details", (req, res, next) => {
-    console.log("triple debug -> ", req.params.id)
     Map.findById(req.params.id)
         .populate("stashes")
         .populate("reviews")
@@ -44,7 +49,7 @@ router.get("/:id/details", (req, res, next) => {
         .catch(err => next(err));
 });
 
-
+//Edit maps details
 router.get("/:id/edit", (req, res, next) => {
 
     Map.findById(req.params.id)
