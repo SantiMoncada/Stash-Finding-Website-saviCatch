@@ -26,7 +26,17 @@ router.post("/:mapId/create", isLoggedIn, checkRole("ADMIN", "CREATOR"), (req, r
         .catch(err => console.log(err));
 });
 
-//List of stashes
+//Stashes details
+router.get("/:id/details", isLoggedIn, (req, res, next) => {
+    const { id } = req.params
+    Stash.findById(id)
+        .then(data => {
+            console.log(data)
+            res.render("stashes/details-stash", data)
+        })
+        .catch(err => next(err));
+
+})
 
 //deleting stash
 router.post("/:mapID/delete/:stashID", (req, res, next) => {
