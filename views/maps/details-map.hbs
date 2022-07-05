@@ -48,9 +48,55 @@
         </div>
     </div>
 
-    <form action="/maps/{{id}}/delete" method="post">
+    <form action="/maps/{{id}}/delete" method="post" class="mb-5">
         <a href="/stashes/{{id}}/create" class="btn btn-success">Add stash</a>
         <a href="/maps/{{id}}/edit" class="btn btn-info">Edit</a>
         <button type="submit" class="btn btn-danger">Delete</button>
     </form>
+
+    <div class="row justify-content-between">
+        <div class="col-6">
+            <h2>Reviews</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each reviews}}
+                    <tr>
+                        <td>{{title}}</td>
+                        <td>{{description}}</td>
+                        <td>{{rating}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-4">
+            <h2>Write a review</h2>
+            <form action="/reviews/{{id}}/create/" method="post">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Review</label>
+                    <input type="text" class="form-control" id="title" name="title">
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                </div>
+                <select class="mb-3 form-select" name="rating">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3" selected>3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
 </div>
