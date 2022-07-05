@@ -1,0 +1,41 @@
+<h1>Create stash</h1>
+<div class="container mt-5">
+    <div class="row" style="justify-content:center">
+        <div class="col-md-4">
+            <form action="/stashes/{{mapId}}/create" method="POST">
+                <div class="form-group mb-3">
+                    <label for="name">Title</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Name of the stash">
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="description">Description</label>
+                    <textarea type="text" class="form-control" id="description" name="description"
+                        placeholder="description of the map"></textarea>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="hint">Hints</label>
+                    <input type="text" class="form-control" id="hint" name="hint" placeholder="Hints of the stash">
+                    <input type="text" class="form-control" id="hint" name="hint" placeholder="Hints of the stash">
+                    <input type="text" class="form-control" id="hint" name="hint" placeholder="Hints of the stash">
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="password">
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="type">Type</label>
+                    <select id="type" class="form-control" name="type">
+                        <option value="PHYSICAL" selected>On site</option>
+                        <option value="VIRTUAL">Virtual</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-secondary">Add stash</button>
+            </form>
+        </div>
+    </div>
+</div>

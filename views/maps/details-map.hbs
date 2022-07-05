@@ -6,5 +6,11 @@
 </p>
 <p>{{type}}
 </p>
+<p>
+    {{#each stashes}}
+    {{name}}
+    {{/each}}
+</p>
 
 <a href="/maps/{{id}}/edit">Edit</a>
+<a href="/stashes/{{id}}/create">Add stash</a>

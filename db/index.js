@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const MONGO_URI = process.env.MONGODB_URI || "mongodb://localhost/SaviCatch";
+const MONGO_URI = process.env.MONGODB_URI || "mongodb+srv://victor:DWoWD5XBzsVfsTti@thebestcluster.xv6go.mongodb.net/test";
 
 mongoose
   .connect(MONGO_URI)

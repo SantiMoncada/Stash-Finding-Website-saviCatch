@@ -16,7 +16,7 @@ router.get('/:id', (req, res, next) => {
         .then(user => {
             res.render('user/details', { user })
         })
-        .catch(err => console.log(err))
+        .catch(err => next(err))
 })
 
 //Update routes
@@ -28,7 +28,7 @@ router.get('/:id/update', (req, res) => {
         .then(user => {
             res.render('user/update', { user })
         })
-        .catch(err => console.log(err))
+        .catch(err => next(err))
 })
 
 router.post('/:id/update', (req, res) => {
@@ -38,7 +38,7 @@ router.post('/:id/update', (req, res) => {
     User
         .findByIdAndUpdate(id, { username, avatar, description })
         .then(user => res.redirect(`/users/${req.session.currentUser._id}`))
-        .catch(err => console.log(err))
+        .catch(err => next(err))
 })
 
 //Delete routes
@@ -49,6 +49,6 @@ router.post('/:id/delete', (req, res) => {
         .then(() => {
             res.redirect('/')
         })
-        .catch(err => console.log(err))
+        .catch(err => next(err))
 })
 module.exports = router;

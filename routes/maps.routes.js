@@ -36,6 +36,7 @@ router.get("/:id/details", (req, res, next) => {
 
     Map.findById(req.params.id)
         .populate("owner")
+        .populate("stashes")
         .then(data => res.render("maps/details-map", data))
         .catch(err => next(err));
 });
