@@ -34,10 +34,10 @@ router.post("/create", isLoggedIn, checkRole("ADMIN", "CREATOR"), (req, res, nex
 });
 
 router.get("/:id/details", (req, res, next) => {
-
+    console.log("triple debug -> ", req.params.id)
     Map.findById(req.params.id)
-        .populate("owner")
         .populate("stashes")
+        .populate("reviews")
         .then(data => {
             res.render("maps/details-map", data)
         })

@@ -30,6 +30,9 @@ app.use("/users", users);
 const stashes = require("./routes/stashes.routes");
 app.use("/stashes", stashes);
 
+const reviews = require("./routes/reviews.routes");
+app.use("/reviews", reviews);
+
 require("./error-handling")(app);
 
 module.exports = app;
