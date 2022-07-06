@@ -53,22 +53,12 @@ router.post("/create", isLoggedIn, checkRole("ADMIN", "CREATOR"), (req, res, nex
 });
 
 //Show maps details
-<<<<<<< HEAD
-router.get("/:id/details", (req, res, next) => {
-
+router.get("/:id/details", isLoggedIn, (req, res, next) => {
     Map.findById(req.params.id)
         .select("stashes reviews name description")
         .populate("stashes reviews")
-        .then(data => {
-            res.render("maps/details-map", data)
-=======
-router.get("/:id/details", isLoggedIn, (req, res, next) => {
-    Map.findById(req.params.id)
-        .populate("stashes")
-        .populate("reviews")
         .then(map => {
             res.render("maps/details-map", { map, userID: req.session.currentUser._id })
->>>>>>> de0baed7ac446202d75977901b7122ff3e14bf2a
         })
         .catch(err => next(new Error(err)));
 
@@ -117,23 +107,11 @@ router.post("/:id/delete", isLoggedIn, (req, res, next) => {
     Map.findById(req.params.id)
         .select("stashes")
         .then(map => {
-<<<<<<< HEAD
 
             if (map.stashes.length > 0) {
                 const filterParam = {
                     $or: map.stashes.map(stashID => { _id: stashID })
                 }
-=======
-            console.log(map.stashes)
-            if (map.stashes > 0) {
-                const filterParam = {
-                    $or: []
-                }
-                map.stashes.forEach(stashID => {
-                    filterParam.$or.push({ _id: stashID });
-                });
-
->>>>>>> de0baed7ac446202d75977901b7122ff3e14bf2a
                 return Stash.deleteMany(filterParam);
             }
         })
