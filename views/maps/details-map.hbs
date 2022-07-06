@@ -1,6 +1,6 @@
 <div class="mt-5 container">
-    <h1>{{name}}</h1>
-    <p>{{description}}</p>
+    <h1>{{map.name}}</h1>
+    <p>{{map.description}}</p>
 
 
     <div class="row justify-content-between">
@@ -36,15 +36,15 @@
                 </tbody>
             </table>
 
-            <form action="/maps/{{id}}/delete" method="post" class="mb-5">
-                <a href="/stashes/{{id}}/create" class="btn btn-success">Add stash</a>
-                <a href="/maps/{{id}}/edit" class="btn btn-info">Edit</a>
+            <form action="/maps/{{map.id}}/delete" method="post" class="mb-5">
+                <a href="/stashes/{{map.id}}/create" class="btn btn-success">Add stash</a>
+                <a href="/maps/{{map.id}}/edit" class="btn btn-info">Edit</a>
                 <button type="submit" class="btn btn-danger">Delete</button>
             </form>
         </div>
         <div class="col-4">
             <h2>Stashes</h2>
-            {{#each stashes}}
+            {{#each map.stashes}}
             <div>
                 <a class="btn btn-outline-info stash" data-bs-toggle="collapse" href="#collapseExample{{@index}}"
                     role="button" aria-expanded="false" aria-controls="collapseExample{{@index}}">
@@ -54,9 +54,9 @@
             <div class="collapse" id="collapseExample{{@index}}">
                 <div class="card card-body">
                     <p>{{description}}</p>
-                    <form action="#" method="post">
-                        <input type="text">
-                        <button class="btn btn-success" type="submit">Test</button>
+                    <form action="/api/checkStash/{{id}}/{{../userID}}" class="stashForm" method="post">
+                        <input type="text" name="guess">
+                        <button class="btn btn-success btn-sm" type="submit">Try</button>
                     </form>
                 </div>
             </div>
@@ -78,7 +78,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {{#each reviews}}
+                    {{#each map.reviews}}
                     <tr>
                         <td>{{title}}</td>
                         <td>{{description}}</td>
@@ -90,7 +90,7 @@
         </div>
         <div class="col-4">
             <h2>Write a review</h2>
-            <form action="/reviews/{{id}}/create/" method="post">
+            <form action="/reviews/{{map.id}}/create/" method="post">
                 <div class="mb-3">
                     <label for="title" class="form-label">Review</label>
                     <input type="text" class="form-control" id="title" name="title">

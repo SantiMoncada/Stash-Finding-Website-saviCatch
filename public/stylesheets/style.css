@@ -43,6 +43,16 @@ img {
 }
 
 .error {
+  background-color: rgb(253, 72, 72);
+  color: white;
+  text-align: center;
+  padding: 5px;
+  margin-top: 20px;
+}
+
+.stashForm {
+  display: flex;
+  align-items: center;
   background-color: rgb(241, 99, 99);
   color: black;
   text-align: center;

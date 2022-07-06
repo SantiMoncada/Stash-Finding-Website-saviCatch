@@ -14,7 +14,8 @@ const stashSchema = new Schema(
         },
         value: {
             type: Number,
-            min: 0
+            min: 0,
+            required: [true, "stash must hava a value"]
         },
         type: {
             type: String,
