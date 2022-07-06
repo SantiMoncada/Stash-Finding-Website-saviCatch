@@ -43,9 +43,10 @@ img {
 }
 
 .error {
-  background-color: red;
-  color: white;
+  background-color: rgb(241, 99, 99);
+  color: black;
   text-align: center;
   padding: 5px;
   margin-top: 20px;
+  border-radius: 2;
 }

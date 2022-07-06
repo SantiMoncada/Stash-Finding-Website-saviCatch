@@ -70,6 +70,8 @@ router.get("/:id/edit", isLoggedIn, (req, res, next) => {
 
 router.post("/:id/edit", isLoggedIn, (req, res, next) => {
     const { name, description, type, lat, lon } = req.body;
+
+    
     const newMap = {
         name,
         description,
