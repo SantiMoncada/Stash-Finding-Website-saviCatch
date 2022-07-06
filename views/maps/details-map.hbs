@@ -36,23 +36,35 @@
                 </tbody>
             </table>
 
-
+            <form action="/maps/{{id}}/delete" method="post" class="mb-5">
+                <a href="/stashes/{{id}}/create" class="btn btn-success">Add stash</a>
+                <a href="/maps/{{id}}/edit" class="btn btn-info">Edit</a>
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
         </div>
         <div class="col-4">
             <h2>Stashes</h2>
-            <div class="list-group">
-                {{#each stashes}}
-                <a href="/stashes/{{id}}/details" class="list-group-item list-group-item-action">{{name}}</a>
-                {{/each}}
+            {{#each stashes}}
+            <div>
+                <a class="btn btn-outline-info stash" data-bs-toggle="collapse" href="#collapseExample{{@index}}"
+                    role="button" aria-expanded="false" aria-controls="collapseExample{{@index}}">
+                    {{name}}
+                </a>
             </div>
+            <div class="collapse" id="collapseExample{{@index}}">
+                <div class="card card-body">
+                    <p>{{description}}</p>
+                    <form action="#" method="post">
+                        <input type="text">
+                        <button class="btn btn-success" type="submit">Test</button>
+                    </form>
+                </div>
+            </div>
+            {{/each}}
         </div>
     </div>
 
-    <form action="/maps/{{id}}/delete" method="post" class="mb-5">
-        <a href="/stashes/{{id}}/create" class="btn btn-success">Add stash</a>
-        <a href="/maps/{{id}}/edit" class="btn btn-info">Edit</a>
-        <button type="submit" class="btn btn-danger">Delete</button>
-    </form>
+
 
     <div class="row justify-content-between">
         <div class="col-6">

@@ -30,7 +30,7 @@ router.post("/create", isLoggedIn, checkRole("ADMIN", "CREATOR"), (req, res, nex
         owner: req.session.currentUser._id,
         location: {
             type: "Point",
-            coordinates: [lat, lon] // TODO add geocoding
+            coordinates: [lat, lon]
         }
     }
     Map.create(newMap)
