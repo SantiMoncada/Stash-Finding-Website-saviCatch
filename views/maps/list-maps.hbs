@@ -46,7 +46,8 @@
                             <a href="/maps/{{id}}/details" class="btn btn-primary btn-lg" type="button">Explore!</a>
                         </div>
                         <div class="col-lg-4">
-                            <div id="thumbnailMap"></div>
+                            <div data-lat="{{location.coordinates.[0]}}" data-lon="{{location.coordinates.[1]}}"
+                                id="thumbnailMap{{@index}}" class="thumbnailMap"></div>
                         </div>
                     </div>
                 </div>
@@ -58,3 +59,7 @@
 
     </div>
 </div>
+<script src="/js/theme.js"></script>
+<script src="/js/maps.js"></script>
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAMzL3s__ul0jf_RCKdh2eRUwJJsQ5ojTo&callback=init"></script>

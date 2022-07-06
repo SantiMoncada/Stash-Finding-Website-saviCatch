@@ -31,7 +31,7 @@ img {
   width: 150px;
 }
 
-#thumbnailMap {
+.thumbnailMap {
   background-color: black;
   height: 0;
   width: 100%;
