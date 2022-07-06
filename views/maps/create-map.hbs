@@ -2,6 +2,9 @@
     <div class="row" style="justify-content:center">
         <div class="col-md-4">
             <form action="/maps/create" method="POST">
+                {{#if errorMessage}}
+                <div class="error">{{{errorMessage}}}</div>
+                {{/if}}
                 <div class="form-group mb-3">
                     <label for="name">Title</label>
                     <input type="text" class="form-control" id="name" name="name" placeholder="Title of map">
@@ -39,6 +42,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-secondary">Add map</button>
+
             </form>
         </div>
     </div>
