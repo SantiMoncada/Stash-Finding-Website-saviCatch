@@ -2,6 +2,8 @@ const router = require("express").Router();
 const Stash = require("../models/Stash.model");
 const Map = require("../models/Map.model");
 
+const { formatErrorMessage } = require("./../utils/formatErrorMessage");
+const { default: mongoose } = require("mongoose");
 
 const { Schema, model } = require("mongoose");
 const { isLoggedIn } = require('../middleware/session-guard');
@@ -22,8 +24,15 @@ router.post("/:mapId/create", isLoggedIn, checkRole("ADMIN", "CREATOR"), (req, r
     }
     Stash.create(newStash)
         .then(stash => Map.findByIdAndUpdate(mapId, { $push: { stashes: stash._id } }))
-        .then(res.redirect("/maps"))
-        .catch(err => console.log(err));
+        .then(() => res.redirect("/maps"))
+        .catch(error => {
+            if (error instanceof mongoose.Error.ValidationError) {
+                res.render('stashes/create-stash', { errorMessage: formatErrorMessage(error) })
+            }
+            else {
+                next(new Error(error))
+            }
+        })
 });
 
 //Stashes details

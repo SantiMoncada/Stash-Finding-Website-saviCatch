@@ -5,7 +5,7 @@ const mapSchema = new Schema(
         name: {
             type: String,
             required: [true, "Map name is required"],
-            unique: [true, "Map name must be unique"]
+            // unique: [true, "Map name must be unique"]
         },
         description: {
             type: String

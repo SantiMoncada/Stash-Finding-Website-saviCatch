@@ -4,8 +4,8 @@ const Review = require("../models/Review.model");
 const Map = require("../models/Map.model");
 
 const { isLoggedIn } = require("../middleware/session-guard");
-//createReview
 
+//createReview
 router.post("/:mapID/create", isLoggedIn, (req, res, next) => {
     const { mapID } = req.params;
 
