@@ -50,12 +50,12 @@ router.post("/create", isLoggedIn, checkRole("ADMIN", "CREATOR"), (req, res, nex
 });
 
 //Show maps details
-router.get("/:id/details", (req, res, next) => {
+router.get("/:id/details", isLoggedIn, (req, res, next) => {
     Map.findById(req.params.id)
         .populate("stashes")
         .populate("reviews")
-        .then(data => {
-            res.render("maps/details-map", data)
+        .then(map => {
+            res.render("maps/details-map", { map, userID: req.session.currentUser._id })
         })
         .catch(err => next(err));
 });
@@ -98,14 +98,16 @@ router.post("/:id/delete", isLoggedIn, (req, res, next) => {
         .select("stashes")
         .then(map => {
             console.log(map.stashes)
-            const filterParam = {
-                $or: []
-            }
-            map.stashes.forEach(stashID => {
-                filterParam.$or.push({ _id: stashID });
-            });
+            if (map.stashes > 0) {
+                const filterParam = {
+                    $or: []
+                }
+                map.stashes.forEach(stashID => {
+                    filterParam.$or.push({ _id: stashID });
+                });
 
-            return Stash.deleteMany(filterParam);
+                return Stash.deleteMany(filterParam);
+            }
         })
         .then(() => Map.findByIdAndDelete(req.params.id))
         .then(() => res.redirect("/maps"))

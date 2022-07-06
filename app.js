@@ -33,6 +33,9 @@ app.use("/stashes", stashes);
 const reviews = require("./routes/reviews.routes");
 app.use("/reviews", reviews);
 
+const api = require("./routes/api.routes");
+app.use("/api", api);
+
 require("./error-handling")(app);
 
 module.exports = app;
