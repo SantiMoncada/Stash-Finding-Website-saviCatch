@@ -5,6 +5,9 @@ const Stash = require("../models/Stash.model");
 
 const { isLoggedIn } = require("../middleware/session-guard");
 const { checkRole } = require("../middleware/check-role");
+const { formatErrorMessage } = require("./../utils/formatErrorMessage");
+const { default: mongoose } = require("mongoose");
+
 
 //List all maps
 router.get("/", (req, res, next) => {
@@ -34,8 +37,16 @@ router.post("/create", isLoggedIn, checkRole("ADMIN", "CREATOR"), (req, res, nex
         }
     }
     Map.create(newMap)
-        .then(res.redirect("/maps"))
-        .catch(err => next(err));
+        .then(() => res.redirect("/maps"))
+        .catch(error => {
+            if (error instanceof mongoose.Error.ValidationError) {
+                res.render('maps/create-map', { errorMessage: formatErrorMessage(error) })
+            }
+            else {
+                next(new Error(error))
+
+            }
+        });
 });
 
 //Show maps details
@@ -49,7 +60,7 @@ router.get("/:id/details", (req, res, next) => {
         .catch(err => next(err));
 });
 
-
+//Edit map
 router.get("/:id/edit", isLoggedIn, (req, res, next) => {
 
     Map.findById(req.params.id)
@@ -70,8 +81,16 @@ router.post("/:id/edit", isLoggedIn, (req, res, next) => {
         }
     }
     Map.findByIdAndUpdate(req.params.id, newMap)
-        .then(res.redirect("/maps"))
-        .catch(err => next(err));
+        .then(() => res.redirect("/maps"))
+        .catch(error => {
+            if (error instanceof mongoose.Error.ValidationError) {
+                res.render('maps/edit-map', { errorMessage: formatErrorMessage(error) })
+                console.log('falta algo')
+            }
+            else {
+                next(new Error(error))
+            }
+        });
 });
 //TODO delete reviews when they get added 
 router.post("/:id/delete", isLoggedIn, (req, res, next) => {

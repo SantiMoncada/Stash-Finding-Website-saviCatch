@@ -41,3 +41,11 @@ img {
 .stash {
   width: 100%;
 }
+
+.error {
+  background-color: red;
+  color: white;
+  text-align: center;
+  padding: 5px;
+  margin-top: 20px;
+}

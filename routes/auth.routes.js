@@ -1,9 +1,11 @@
 const router = require("express").Router();
+const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs');
 const User = require("../models/User.model");
 const uploader = require("../config/uploader.config");
 const saltRounds = 10;
 
+const { formatErrorMessage } = require("./../utils/formatErrorMessage");
 
 
 router.get("/signup", (req, res, next) => {
@@ -14,7 +16,6 @@ router.post("/signup", uploader.single('avatar'), (req, res, next) => {
     const { password, username, email } = req.body;
 
     const avatar = req.file ? req.file.path : undefined;
-
     bcrypt
         .genSalt(saltRounds)
         .then(salt => bcrypt.hash(password, salt))
@@ -25,7 +26,14 @@ router.post("/signup", uploader.single('avatar'), (req, res, next) => {
             avatar
         }))
         .then(createdUser => res.redirect('/'))
-        .catch(error => next(error))
+        .catch(error => {
+            if (error instanceof mongoose.Error.ValidationError) {
+                res.render('auth/signup', { errorMessage: formatErrorMessage(error) })
+            }
+            else {
+                next(new Error(error))
+            }
+        })
 });
 
 router.get("/login", (req, res, next) => {
@@ -38,19 +46,21 @@ router.post("/login", (req, res, next) => {
         .findOne({ username })
         .then(user => {
             if (!user) {
-                res.render('auth/login', { errorMessage: 'Email no registrado en la Base de Datos' })
+                res.render('auth/login', { errorMessage: 'Username is not registered' })
                 return
             }
             if (bcrypt.compareSync(password, user.password) === false) {
-                res.render('auth/login', { errorMessage: 'La contraseña es incorrecta' })
+                res.render('auth/login', { errorMessage: 'Password incorrect' })
                 return
             }
-            
+
             req.session.currentUser = user
             console.log('usuario', req.session.currentUser)
             res.redirect('/')
         })
         .catch(error => next(error))
+
+
 });
 
 router.post("/logout", (req, res, next) => {
