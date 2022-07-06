@@ -16,18 +16,20 @@ router.get("/:mapId/create", isLoggedIn, checkRole("ADMIN", "CREATOR"), (req, re
 });
 
 router.post("/:mapId/create", isLoggedIn, checkRole("ADMIN", "CREATOR"), (req, res, next) => {
+
     const { mapId } = req.params
 
     const newStash = {
         ...req.body,
         owner: req.session.currentUser._id
     }
+
     Stash.create(newStash)
         .then(stash => Map.findByIdAndUpdate(mapId, { $push: { stashes: stash._id } }))
         .then(() => res.redirect("/maps"))
         .catch(error => {
             if (error instanceof mongoose.Error.ValidationError) {
-                res.render('stashes/create-stash', { errorMessage: formatErrorMessage(error) })
+                res.render('stashes/create-stash', { mapId ,errorMessage: formatErrorMessage(error) })
             }
             else {
                 next(new Error(error))
@@ -35,12 +37,14 @@ router.post("/:mapId/create", isLoggedIn, checkRole("ADMIN", "CREATOR"), (req, r
         })
 });
 
+
 //Stashes details
 router.get("/:id/details", isLoggedIn, (req, res, next) => {
+
     const { id } = req.params
+
     Stash.findById(id)
         .then(data => {
-            console.log(data)
             res.render("stashes/details-stash", data)
         })
         .catch(err => next(err));
@@ -49,6 +53,7 @@ router.get("/:id/details", isLoggedIn, (req, res, next) => {
 
 //deleting stash
 router.post("/:mapID/delete/:stashID", (req, res, next) => {
+
     const { mapID, stashID } = req.params;
 
     Map.findByIdAndUpdate(mapID, { $pull: { stashes: stashID } })

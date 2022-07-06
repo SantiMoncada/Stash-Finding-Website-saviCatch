@@ -12,10 +12,11 @@ const { default: mongoose } = require("mongoose");
 //List all maps
 router.get("/", (req, res, next) => {
     Map.find()
+        .select("name description location ")
         .then(data => {
             res.render("maps/list-maps", { data })
         })
-        .catch(err => next(err));
+        .catch(err => next(new Error(err)));
 });
 
 
@@ -25,7 +26,9 @@ router.get("/create", isLoggedIn, checkRole("ADMIN", "CREATOR"), (req, res, next
 });
 
 router.post("/create", isLoggedIn, checkRole("ADMIN", "CREATOR"), (req, res, next) => {
-    const { name, description, address, type, lat, lon } = req.body;
+
+    const { name, description, type, lat, lon } = req.body
+
     const newMap = {
         name,
         description,
@@ -36,6 +39,7 @@ router.post("/create", isLoggedIn, checkRole("ADMIN", "CREATOR"), (req, res, nex
             coordinates: [lat, lon]
         }
     }
+
     Map.create(newMap)
         .then(() => res.redirect("/maps"))
         .catch(error => {
@@ -44,34 +48,37 @@ router.post("/create", isLoggedIn, checkRole("ADMIN", "CREATOR"), (req, res, nex
             }
             else {
                 next(new Error(error))
-
             }
         });
 });
 
 //Show maps details
 router.get("/:id/details", (req, res, next) => {
+
     Map.findById(req.params.id)
-        .populate("stashes")
-        .populate("reviews")
+        .select("stashes reviews name description")
+        .populate("stashes reviews")
         .then(data => {
             res.render("maps/details-map", data)
         })
-        .catch(err => next(err));
+        .catch(err => next(new Error(err)));
+
 });
 
 //Edit map
 router.get("/:id/edit", isLoggedIn, (req, res, next) => {
 
     Map.findById(req.params.id)
+        .select("name description location")
         .then(data => res.render("maps/edit-map", data))
-        .catch(err => next(err));
+        .catch(err => next(new Error(err)));
+
 });
 
 router.post("/:id/edit", isLoggedIn, (req, res, next) => {
+
     const { name, description, type, lat, lon } = req.body;
 
-    
     const newMap = {
         name,
         description,
@@ -82,36 +89,36 @@ router.post("/:id/edit", isLoggedIn, (req, res, next) => {
             coordinates: [lat, lon] // TODO add geocoding
         }
     }
+
     Map.findByIdAndUpdate(req.params.id, newMap)
         .then(() => res.redirect("/maps"))
         .catch(error => {
             if (error instanceof mongoose.Error.ValidationError) {
                 res.render('maps/edit-map', { errorMessage: formatErrorMessage(error) })
-                console.log('falta algo')
             }
             else {
                 next(new Error(error))
             }
         });
 });
+
 //TODO delete reviews when they get added 
 router.post("/:id/delete", isLoggedIn, (req, res, next) => {
+
     Map.findById(req.params.id)
         .select("stashes")
         .then(map => {
-            console.log(map.stashes)
-            const filterParam = {
-                $or: []
-            }
-            map.stashes.forEach(stashID => {
-                filterParam.$or.push({ _id: stashID });
-            });
 
-            return Stash.deleteMany(filterParam);
+            if (map.stashes.length > 0) {
+                const filterParam = {
+                    $or: map.stashes.map(stashID => { _id: stashID })
+                }
+                return Stash.deleteMany(filterParam);
+            }
         })
         .then(() => Map.findByIdAndDelete(req.params.id))
         .then(() => res.redirect("/maps"))
-        .catch(err => next(err));
+        .catch(error => next(new Error(error)));
 });
 
 module.exports = router;

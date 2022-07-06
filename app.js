@@ -15,23 +15,7 @@ const projectName = "SaviCatch";
 
 app.locals.appTitle = `${(projectName)} created with IronLauncher`;
 
-const index = require("./routes/index.routes");
-app.use("/", index);
-
-const auth = require("./routes/auth.routes");
-app.use("/", auth);
-
-const maps = require("./routes/maps.routes");
-app.use("/maps", maps);
-
-const users = require("./routes/users.routes");
-app.use("/users", users);
-
-const stashes = require("./routes/stashes.routes");
-app.use("/stashes", stashes);
-
-const reviews = require("./routes/reviews.routes");
-app.use("/reviews", reviews);
+app.use("/", require("./routes/base.routes"))
 
 require("./error-handling")(app);
 

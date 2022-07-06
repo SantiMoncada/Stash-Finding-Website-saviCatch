@@ -28,12 +28,10 @@ const mapSchema = new Schema(
         reviews: [{
             type: Schema.Types.ObjectId,
             ref: 'Review',
-            timestamp: Date.now()
         }],
         stashes: [{
             type: Schema.Types.ObjectId,
             ref: 'Stash',
-            timestamp: Date.now()
         }],
     },
     {

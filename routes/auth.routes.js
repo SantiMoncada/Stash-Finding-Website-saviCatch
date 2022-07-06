@@ -15,7 +15,8 @@ router.get("/signup", (req, res, next) => {
 router.post("/signup", uploader.single('avatar'), (req, res, next) => {
     const { password, username, email } = req.body;
 
-    const avatar = req.file ? req.file.path : undefined;
+    const avatar = req.file?.path
+
     bcrypt
         .genSalt(saltRounds)
         .then(salt => bcrypt.hash(password, salt))
@@ -55,7 +56,6 @@ router.post("/login", (req, res, next) => {
             }
 
             req.session.currentUser = user
-            console.log('usuario', req.session.currentUser)
             res.redirect('/')
         })
         .catch(error => next(error))
