@@ -2,6 +2,7 @@ const router = require("express").Router();
 
 const Map = require("../models/Map.model");
 const Stash = require("../models/Stash.model");
+const User = require("../models/User.model");
 
 const { isLoggedIn } = require("../middleware/session-guard");
 const { checkRole } = require("../middleware/check-role");
@@ -14,7 +15,11 @@ router.get("/", (req, res, next) => {
     Map.find()
         .select("name description location ")
         .then(data => {
-            res.render("maps/list-maps", { data })
+            User.find()
+                .sort({ points: -1 })
+                .then((user) => {
+                    res.render("maps/list-maps", { data, user })
+                })
         })
         .catch(err => next(new Error(err)));
 });

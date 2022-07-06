@@ -3,7 +3,7 @@
         <div class="col-4">
             <img src="{{avatar}}" alt="piture of {{username}}">
             <h2>{{username}}</h2>
-            <h3>{{email}}</h3>
+            <h4>{{email}}</h4>
             <p>{{description}}</p>
         </div>
         <div class="col-4">
@@ -11,31 +11,20 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
+                        <th scope="col">Name</th>
+                        <th scope="col"></th>
+                        <th scope="col">Value</th>
                     </tr>
                 </thead>
+                {{#each stashes}}
                 <tbody>
                     <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>@twitter</td>
+                        <td>{{name}}</td>
+                        <td></td>
+                        <td>{{value}}</td>
                     </tr>
                 </tbody>
+                {{/each}}
             </table>
         </div>
 
