@@ -54,10 +54,12 @@
             <div class="collapse" id="collapseExample{{@index}}">
                 <div class="card card-body">
                     <p>{{description}}</p>
-                    <form action="/api/checkStash/{{id}}/{{../userID}}" class="stashForm" method="post">
-                        <input type="text" name="guess">
-                        <button class="btn btn-success btn-sm" type="submit">Try</button>
-                    </form>
+                    <div class="mb-3">
+                        <input type="text" id="guessField{{@index}}">
+                        <button class="btn btn-success btn-sm tryButton" data-index="{{@index}}"
+                            data-userid="{{../userID}}" data-stashid="{{id}}">Try</button>
+                    </div>
+                    <p id="stashMessage{{@index}}"></p>
                 </div>
             </div>
             {{/each}}
@@ -112,3 +114,5 @@
         </div>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/js/stashCheck.js"></script>

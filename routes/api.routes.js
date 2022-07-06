@@ -11,20 +11,22 @@ router.post("/checkStash/:stashID/:userID", (req, res, next) => {
     const { guess } = req.body;
     let currentStash;
 
+
+    if (req.session.currentUser && req.session.currentUser._id != userID) {
+        res.json({ result: false, pointsAwarded: 0, msg: "You need the credentials" });
+        return;
+    }
     Stash.findById(stashID)
         .then(stash => {
             currentStash = stash;
             if (guess !== stash.password) {
-                res.json({ result: false, pointsAwarded: 0, msg: "Wrong Code" });
-                return;
+                throw new Error("Wrong Code");
             }
-            return User.findById(userID)
-                .select("stashes");
+            return User.findById(userID).select("stashes");
         })
         .then(user => {
             if (user.stashes.includes(stashID)) {
-                res.json({ result: false, pointsAwarded: 0, msg: "Already completed" });
-                return;
+                throw new Error("Already completed");
             }
             return User.findByIdAndUpdate(userID, { $inc: { points: currentStash.value }, $push: { stashes: stashID } });
 
@@ -32,7 +34,15 @@ router.post("/checkStash/:stashID/:userID", (req, res, next) => {
         .then(() =>
             res.json({ result: true, pointsAwarded: currentStash.value, msg: `Congrats, ${currentStash.value} points gained` })
         )
-        .catch(err => next(err));
+        .catch(err => {
+            if (err.message) {
+                res.json({ result: false, pointsAwarded: 0, msg: err.message });
+            }
+            else {
+                next(new Error(err))
+            }
+
+        });
 
 });
 
