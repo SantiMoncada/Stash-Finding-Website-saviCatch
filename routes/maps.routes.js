@@ -59,13 +59,45 @@ router.post("/create", isLoggedIn, checkRole("ADMIN", "CREATOR"), (req, res, nex
 
 //Show maps details
 router.get("/:id/details", isLoggedIn, (req, res, next) => {
-    Map.findById(req.params.id)
+
+    const usersStashesPromise = User.find()
+        .select("stashes username")
+        .populate({ path: "stashes.id" }); // add selection
+
+    const mapPromise = Map.findById(req.params.id)
         .select("stashes reviews name description")
-        .populate("stashes reviews")
-        .then(map => {
-            res.render("maps/details-map", { map, userID: req.session.currentUser._id })
+        .populate("stashes reviews");
+
+    Promise.all([mapPromise, usersStashesPromise])
+        .then(response => {
+
+            const mapStashesIds = response[0].stashes.map(elem => elem._id);
+            console.log({ mapStashesIds })
+            const mapStashes = [];
+            console.log("userStashes promise", response[1]);
+            response[1].forEach(user => {
+                user.stashes.forEach(stash => {
+                    for (let i = 0; i < mapStashesIds.length; i++) {
+                        if (mapStashesIds[i].equals(stash.id._id)) {
+                            mapStashes.push({ ...stash.id._doc, username: user.username, founded: stash.created });
+                            break;
+                        }
+                    }
+
+                })
+            });
+
+
+            mapStashes.sort((a, b) => {
+                return (b.founded.getTime() - a.founded.getTime());
+            });
+            console.log({ sorted: mapStashes })
+
+
+            res.render("maps/details-map", { map: response[0], userID: req.session.currentUser._id, mapStashes })
         })
         .catch(err => next(new Error(err)));
+
 
 });
 

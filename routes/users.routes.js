@@ -15,8 +15,9 @@ router.get('/:id', (req, res, next) => {
     User
         .findById(id)
         .select("username avatar email description points stashes")
-        .populate({ path: 'stashes', select: 'name value' })
+        .populate({ path: 'stashes.id', select: 'name value' })
         .then(user => {
+            console.log(user)
             res.render('user/details', user)
         })
         .catch(err => next(err))

@@ -9,30 +9,20 @@
             <table class="table  table-success table-striped">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
+                        <th scope="col">User</th>
+                        <th scope="col">Stash</th>
+                        <th scope="col">Date</th>
                     </tr>
                 </thead>
                 <tbody>
+                    {{#each mapStashes}}
                     <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
+                        <td>{{username}}</td>
+                        <td>{{name}}</td>
+                        <td>{{founded}}</td>
                     </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>@twitter</td>
-                    </tr>
+                    {{/each}}
+
                 </tbody>
             </table>
 

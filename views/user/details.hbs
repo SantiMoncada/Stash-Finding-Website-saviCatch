@@ -13,6 +13,29 @@
             <table class="table">
                 <thead>
                     <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col"></th>
+                        <th scope="col">Value</th>
+                    </tr>
+                </thead>
+                {{#each stashes}}
+                <tbody>
+                    <tr>
+                        <td>{{id.name}}</td>
+                        <td></td>
+                        <td>{{id.value}}</td>
+                    </tr>
+                </tbody>
+                {{/each}}
+            </table>
+        </div>
+        <div class="col-4">
+            <h2>Points:{{points}}</h2>
+            <hr>
+
+            <table class="table">
+                <thead>
+                    <tr>
                         <th scope="col">#</th>
                         <th scope="col">First</th>
                         <th scope="col">Last</th>
@@ -42,27 +65,7 @@
 
         </div>
 
-        <div class="col-4">
-            <h2>Points:{{points}}</h2>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col"></th>
-                        <th scope="col">Value</th>
-                    </tr>
-                </thead>
-                {{#each stashes}}
-                <tbody>
-                    <tr>
-                        <td>{{name}}</td>
-                        <td></td>
-                        <td>{{value}}</td>
-                    </tr>
-                </tbody>
-                {{/each}}
-            </table>
-        </div>
+
     </div>
     <form action="/users/{{id}}/delete" method="POST">
         <a href="/users/{{id}}/update" class="btn btn-info">Edit</a>

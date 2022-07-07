@@ -25,10 +25,15 @@ router.post("/checkStash/:stashID/:userID", (req, res, next) => {
             return User.findById(userID).select("stashes");
         })
         .then(user => {
+            user.stashes.forEach(stash => {
+                if (stash.id.equals(stashID)) {
+                    throw new Error("Already completed");
+                }
+            })
             if (user.stashes.includes(stashID)) {
                 throw new Error("Already completed");
             }
-            return User.findByIdAndUpdate(userID, { $inc: { points: currentStash.value }, $push: { stashes: stashID } });
+            return User.findByIdAndUpdate(userID, { $inc: { points: currentStash.value }, $push: { stashes: { id: stashID } } });
 
         })
         .then(() =>

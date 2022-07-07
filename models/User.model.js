@@ -34,10 +34,16 @@ const userSchema = new Schema(
       default: 0
     },
     stashes: [{
-      type: Schema.Types.ObjectId,
-      ref: 'Stash',
-      timestamp: Date.now()
-    }]
+      id: {
+        type: Schema.Types.ObjectId,
+        ref: 'Stash',
+      },
+      created: {
+        type: Date,
+        default: Date.now()
+      }
+    }
+    ]
   },
   {
     timestamps: true
