@@ -2,34 +2,14 @@
     <div class="row">
         <div class="col-4">
             <img src="{{avatar}}" alt="piture of {{username}}">
+        </div>
+        <div class="col-4">
             <h2>{{username}}</h2>
             <h4>{{email}}</h4>
             <p>{{description}}</p>
         </div>
         <div class="col-4">
             <h2>Activity</h2>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col"></th>
-                        <th scope="col">Value</th>
-                    </tr>
-                </thead>
-                {{#each stashes}}
-                <tbody>
-                    <tr>
-                        <td>{{name}}</td>
-                        <td></td>
-                        <td>{{value}}</td>
-                    </tr>
-                </tbody>
-                {{/each}}
-            </table>
-        </div>
-
-        <div class="col-4">
-            <h2>Points:{{points}}</h2>
             <table class="table">
                 <thead>
                     <tr>
@@ -58,6 +38,29 @@
                         <td>@twitter</td>
                     </tr>
                 </tbody>
+            </table>
+
+        </div>
+
+        <div class="col-4">
+            <h2>Points:{{points}}</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col"></th>
+                        <th scope="col">Value</th>
+                    </tr>
+                </thead>
+                {{#each stashes}}
+                <tbody>
+                    <tr>
+                        <td>{{name}}</td>
+                        <td></td>
+                        <td>{{value}}</td>
+                    </tr>
+                </tbody>
+                {{/each}}
             </table>
         </div>
     </div>
