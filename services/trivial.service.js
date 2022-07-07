@@ -23,7 +23,6 @@ class TrivialService {
         const category = setting.category ? setting.category : 9;
         const difficulty = setting.difficulty ? setting.difficulty : "easy";
 
-        console.log("end")
 
         let amountString = ''
         let categoryString = ''
@@ -40,7 +39,6 @@ class TrivialService {
             difficultyString = `&difficulty=${difficulty}`
         }
 
-        console.log(`/api.php?${amountString}${categoryString}${difficultyString}${typeString}`)
         return this.api.get(`/api.php?${amountString}${categoryString}${difficultyString}${typeString}`)
 
     }

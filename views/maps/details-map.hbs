@@ -27,10 +27,18 @@
             </table>
 
             <form action="/maps/{{map.id}}/delete" method="post" class="mb-5">
+                {{#if ./role.isCREATOR}}
                 <a href="/stashes/{{map.id}}/create" class="btn btn-success">Add stash</a>
+                {{/if}}
+                {{#if ./role.isADMIN}}
+                <a href="/stashes/{{map.id}}/create" class="btn btn-success">Add stash</a>
+                {{/if}}
                 <a href="/maps/{{map.id}}/edit" class="btn btn-info">Edit</a>
+                {{#if ./role.isADMIN}}
                 <button type="submit" class="btn btn-danger">Delete</button>
+                {{/if}}
             </form>
+
         </div>
         <div class="col-4">
             <h2>Stashes</h2>
@@ -93,10 +101,12 @@
                     <label for="title" class="form-label">Review</label>
                     <input type="text" class="form-control" id="title" name="title">
                 </div>
+
                 <div class="mb-3">
                     <label for="description" class="form-label">Description</label>
                     <textarea class="form-control" id="description" name="description" rows="3"></textarea>
                 </div>
+
                 <select class="mb-3 form-select" name="rating">
                     <option value="1">1</option>
                     <option value="2">2</option>

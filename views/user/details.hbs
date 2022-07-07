@@ -1,12 +1,12 @@
 <div class="mt-5 container">
     <div class="row">
         <div class="col-4">
-            <img src="{{avatar}}" alt="piture of {{username}}" class="avatar">
+            <img src="{{user.avatar}}" alt="piture of {{user.username}}" class="avatar">
         </div>
         <div class="col-4">
-            <h2>{{username}}</h2>
-            <h4>{{email}}</h4>
-            <p>{{description}}</p>
+            <h2>{{user.username}}</h2>
+            <h4>{{user.email}}</h4>
+            <p>{{user.description}}</p>
         </div>
         <div class="col-4">
             <h2>Activity</h2>
@@ -69,7 +69,9 @@
     </div>
     <form action="/users/{{id}}/delete" method="POST">
         <a href="/users/{{id}}/update" class="btn btn-info">Edit</a>
+        {{#if ./role.isADMIN}}
         <input type="submit" value="Delete" class="btn btn-danger">
+        {{/if}}
     </form>
 
 </div>

@@ -6,12 +6,14 @@ const User = require("../models/User.model");
 
 const { isLoggedIn } = require("../middleware/session-guard");
 const { checkRole } = require("../middleware/check-role");
+const { rolesChecker } = require("../utils/roles-checker");
 const { formatErrorMessage } = require("./../utils/formatErrorMessage");
 const { default: mongoose } = require("mongoose");
 
 
 //List all maps
 router.get("/", (req, res, next) => {
+
     Map.find()
         .select("name description location ")
         .then(data => {
@@ -60,6 +62,8 @@ router.post("/create", isLoggedIn, checkRole("ADMIN", "CREATOR"), (req, res, nex
 //Show maps details
 router.get("/:id/details", isLoggedIn, (req, res, next) => {
 
+    const role = rolesChecker(req.session.currentUser)
+
     const usersStashesPromise = User.find()
         .select("stashes username")
         .populate({ path: "stashes.id" }); // add selection
@@ -93,7 +97,7 @@ router.get("/:id/details", isLoggedIn, (req, res, next) => {
             console.log({ sorted: mapStashes })
 
 
-            res.render("maps/details-map", { map: response[0], userID: req.session.currentUser._id, mapStashes })
+            res.render("maps/details-map", { map: response[0], userID: req.session.currentUser._id, mapStashes, role })
         })
         .catch(err => next(new Error(err)));
 
