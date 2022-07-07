@@ -72,9 +72,8 @@ router.get("/:id/details", isLoggedIn, (req, res, next) => {
         .then(response => {
 
             const mapStashesIds = response[0].stashes.map(elem => elem._id);
-            console.log({ mapStashesIds })
             const mapStashes = [];
-            console.log("userStashes promise", response[1]);
+
             response[1].forEach(user => {
                 user.stashes.forEach(stash => {
                     for (let i = 0; i < mapStashesIds.length; i++) {
