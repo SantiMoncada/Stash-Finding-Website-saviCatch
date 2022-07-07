@@ -10,6 +10,9 @@ document.querySelectorAll('.tryButton').forEach(button => {
                 console.log(response)
                 const textField = document.getElementById(`stashMessage${index}`);
                 textField.innerText = response.data.msg;
+                if (response.data.result) {
+                    location.reload();
+                }
             })
             .catch(err => {
                 const textField = document.getElementById(`stashMessage${index}`);
