@@ -13,17 +13,8 @@ router.get('/myProfile', isLoggedIn, (req, res) => {
 
 router.get('/:id', (req, res, next) => {
 
-    const { id } = req.params
-    // .get({ammount : 3, adf})
-    TrivialService.getRandomTrivial()
-        .then(response => {
-            console.log('TRIVIAL', response.data)
-        })
-    TrivialService.getCustomTrivial({ amount: 2, category: 11, difficulty: 'hard' })
-        .then(response => {
-            console.log('CATEGORIES', response.data)
+    const { id } = req.params;
 
-        })
     User
         .findById(id)
         .select("username avatar email description points stashes")

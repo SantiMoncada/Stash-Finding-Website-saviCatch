@@ -9,6 +9,7 @@ const { checkRole } = require("../middleware/check-role");
 const { formatErrorMessage } = require("./../utils/formatErrorMessage");
 const { default: mongoose } = require("mongoose");
 
+const { parseDateHuman } = require("./../utils/human-date");
 
 //List all maps
 router.get("/", (req, res, next) => {
@@ -78,7 +79,7 @@ router.get("/:id/details", isLoggedIn, (req, res, next) => {
                 user.stashes.forEach(stash => {
                     for (let i = 0; i < mapStashesIds.length; i++) {
                         if (mapStashesIds[i].equals(stash.id._id)) {
-                            mapStashes.push({ ...stash.id._doc, username: user.username, founded: stash.created });
+                            mapStashes.push({ ...stash.id._doc, username: user.username, founded: stash.created, dateHuman: parseDateHuman(stash.created) });
                             break;
                         }
                     }
@@ -90,7 +91,7 @@ router.get("/:id/details", isLoggedIn, (req, res, next) => {
             mapStashes.sort((a, b) => {
                 return (b.founded.getTime() - a.founded.getTime());
             });
-            console.log({ sorted: mapStashes })
+
 
 
             res.render("maps/details-map", { map: response[0], userID: req.session.currentUser._id, mapStashes })
