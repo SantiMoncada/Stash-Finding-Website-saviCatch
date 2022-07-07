@@ -20,8 +20,8 @@ class TrivialService {
     getCustomTrivial(setting) {
         setting = setting ? setting : {};
         const amount = setting.amount ? setting.amount : 1;
-        const category = setting.category ? setting.category : 9;
         const difficulty = setting.difficulty ? setting.difficulty : "easy";
+        const category = setting.category;
 
 
         let amountString = ''

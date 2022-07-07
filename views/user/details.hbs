@@ -9,8 +9,8 @@
             <p>{{user.description}}</p>
         </div>
         <div class="col-lg-4 mb-3">
-            <h2>savi: {{points}}</h2>
-            <table class="table">
+            <h2>savi: {{user.points}}</h2>
+            <table class="table table-hover table-striped">
                 <thead>
                     <tr>
                         <th scope="col">Name</th>
@@ -18,31 +18,59 @@
                         <th scope="col">Value</th>
                     </tr>
                 </thead>
-                {{#each stashes}}
                 <tbody>
+                    {{#each user.stashes}}
                     <tr>
                         <td>{{id.name}}</td>
                         <td></td>
                         <td>{{id.value}}</td>
                     </tr>
+                    {{/each}}
                 </tbody>
-                {{/each}}
             </table>
         </div>
+        <form action="/users/{{user.id}}/delete" method="POST">
+            <a href="/users/{{user.id}}/update" class="btn btn-info">Edit</a>
+            {{#if ./role.isADMIN}}
+            <input type="submit" value="Delete" class="btn btn-danger">
+            {{/if}}
+        </form>
         <div class="col-lg-4 mb-3">
             <h2>Get more savi on the trivia</h2>
             <hr>
+            <form action="/users/{{user.id}}/trivia" method="POST">
+                <div class="form-row">
+                    {{#if reply.success}}
+                    <h5 class="correct">CORRECT ANSWER</h5>
+                    {{/if}}
+                    {{#if reply.failure}}
+                    <h5 class="error">INCORRECT ANSWER</h5>
+                    {{/if}}
+                    <div class="form-group mb-3">
+                        <label for="name">Category</label>
+                        <input type="text" class="form-control" id="name" name="username" value="{{trivia.category}}"
+                            readonly>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="question">Question</label>
+                        <textarea type="text" class="form-control" id="question"
+                            name="question">{{trivia.question}}</textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="name">Answers</label>
+                        <select name="answers" class="form-control">
+                            {{#each trivia.responses}}
+                            <option value="{{this}}">{{this}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
 
+                </div>
+                <button type="submit" class="btn btn-secondary">Send</button>
+            </form>
 
         </div>
-
-
     </div>
-    <form action="/users/{{id}}/delete" method="POST">
-        <a href="/users/{{id}}/update" class="btn btn-info">Edit</a>
-        {{#if ./role.isADMIN}}
-        <input type="submit" value="Delete" class="btn btn-danger">
-        {{/if}}
-    </form>
+
 
 </div>
