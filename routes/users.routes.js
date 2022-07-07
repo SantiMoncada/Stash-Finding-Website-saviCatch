@@ -1,17 +1,28 @@
 const router = require("express").Router();
 const User = require("../models/User.model")
 const { isLoggedIn } = require('./../middleware/session-guard');
+const TrivialService = require('./../services/trivial.service')
+
 
 
 //My profile details routes
 router.get('/myProfile', isLoggedIn, (req, res) => {
+
     res.redirect(`/users/${req.session.currentUser._id}`)
 })
 
 router.get('/:id', (req, res, next) => {
 
     const { id } = req.params
+    TrivialService.getRandomTrivial()
+        .then(response => {
+            console.log('TRIVIAL', response.data)
+        })
+    TrivialService.getCategories()
+        .then(response => {
+            console.log('CATEGORIES', response.data)
 
+        })
     User
         .findById(id)
         .select("username avatar email description points stashes")

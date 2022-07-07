@@ -78,3 +78,11 @@ img {
   text-align: center;
   padding: 10px;
 }
+
+.avatar {
+  width: 300px;
+  height: 300px;
+  border-width: 10px;
+  border-style: solid;
+  border-image: url(/images/city.jpg) 25% stretch stretch;
+}
