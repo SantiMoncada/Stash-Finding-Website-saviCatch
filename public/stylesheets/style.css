@@ -89,11 +89,10 @@ img {
   z-index: 1;
 }
 
-
 .avatar {
   width: 300px;
   height: 300px;
   border-width: 10px;
   border-style: solid;
-  border-image: url(/images/city.jpg) 25% stretch stretch;
+  border-image: url(/images/marco.jpg) 25% stretch stretch;
 }

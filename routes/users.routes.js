@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const User = require("../models/User.model")
 const { isLoggedIn } = require('./../middleware/session-guard');
+const { rolesChecker } = require("../utils/roles-checker");
 const TrivialService = require('./../services/trivial.service')
 
 
@@ -14,14 +15,13 @@ router.get('/myProfile', isLoggedIn, (req, res) => {
 router.get('/:id', (req, res, next) => {
 
     const { id } = req.params;
-
+    const role = rolesChecker(req.session.currentUser)
     User
         .findById(id)
         .select("username avatar email description points stashes")
         .populate({ path: 'stashes.id', select: 'name value' })
         .then(user => {
-            console.log(user)
-            res.render('user/details', user)
+            res.render('user/details', { user, role })
         })
         .catch(err => next(err))
 })
