@@ -2,7 +2,8 @@ const router = require("express").Router();
 const User = require("../models/User.model")
 const { isLoggedIn } = require('./../middleware/session-guard');
 const { rolesChecker } = require("../utils/roles-checker");
-const TrivialService = require('./../services/trivial.service')
+const TrivialService = require('./../services/trivial.service');
+const { htmlDecode } = require("../utils/html-decode");
 
 
 
@@ -23,7 +24,7 @@ router.get('/:id', (req, res, next) => {
 
     Promise.all([triviaPromise, userPromise])
         .then(response => {
-            console.log(response[0].data.results[0]);
+
             const parsedTrivia = {
                 ...response[0].data.results[0],
                 responses: [
@@ -37,6 +38,9 @@ router.get('/:id', (req, res, next) => {
                 success: req.session.correct,
                 failure: req.session.wrong
             }
+
+            parsedTrivia.question = htmlDecode(parsedTrivia.question);
+
             res.render('user/details', { user: response[1], role, trivia: parsedTrivia, reply })
         })
         .catch(err => next(new Error(err)));
