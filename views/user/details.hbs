@@ -1,12 +1,18 @@
 <div class="mt-5 container">
     <div class="row justify-content-center">
-        <div class="col-lg-4 mb-3">
+        <div class="col-lg-4 mb-3 d-flex justify-content-center">
             <img src="{{user.avatar}}" alt="piture of {{user.username}}" class="avatar">
         </div>
         <div class="col-lg-4 mb-3">
             <h2>{{user.username}}</h2>
             <h4>{{user.email}}</h4>
             <p>{{user.description}}</p>
+            <form action="/users/{{user.id}}/delete" method="POST">
+                <a href="/users/{{user.id}}/update" class="btn btn-dark">Edit</a>
+                {{#if ./role.isADMIN}}
+                <input type="submit" value="Delete" class="btn btn-danger">
+                {{/if}}
+            </form>
         </div>
         <div class="col-lg-4 mb-3">
             <h2>savi: {{user.points}}</h2>
@@ -29,12 +35,8 @@
                 </tbody>
             </table>
         </div>
-        <form action="/users/{{user.id}}/delete" method="POST">
-            <a href="/users/{{user.id}}/update" class="btn btn-info">Edit</a>
-            {{#if ./role.isADMIN}}
-            <input type="submit" value="Delete" class="btn btn-danger">
-            {{/if}}
-        </form>
+
+
         <div class="col-lg-4 mb-3">
             <h2>Get more savi on the trivia</h2>
             <hr>
